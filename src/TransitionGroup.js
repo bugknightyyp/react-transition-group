@@ -36,9 +36,10 @@ class TransitionGroup extends React.Component {
     this.keysToLeave = [];
   }
 
-  componentDidMount() {
+  componentDidMount() {// 初始化工作
+    debugger
     let initialChildMapping = this.state.children;
-    for (let key in initialChildMapping) {
+    for (let key in initialChildMapping) {// 如果 没有添加 key，则 key = .0 之类的 形式
       if (initialChildMapping[key]) {
         this.performAppear(key);
       }
@@ -49,18 +50,17 @@ class TransitionGroup extends React.Component {
     let nextChildMapping = getChildMapping(nextProps.children);
     let prevChildMapping = this.state.children;
 
-    this.setState({
+    this.setState({//这样会保存所有的element, 包括将要删除的
       children: mergeChildMappings(
         prevChildMapping,
         nextChildMapping,
       ),
     });
-
     for (let key in nextChildMapping) {
       let hasPrev = prevChildMapping && prevChildMapping.hasOwnProperty(key);
       if (nextChildMapping[key] && !hasPrev &&
           !this.currentlyTransitioningKeys[key]) {
-        this.keysToEnter.push(key);
+        this.keysToEnter.push(key);// 保存新加的element的key
       }
     }
 
@@ -68,7 +68,7 @@ class TransitionGroup extends React.Component {
       let hasNext = nextChildMapping && nextChildMapping.hasOwnProperty(key);
       if (prevChildMapping[key] && !hasNext &&
           !this.currentlyTransitioningKeys[key]) {
-        this.keysToLeave.push(key);
+        this.keysToLeave.push(key);// 保存移走的element的key
       }
     }
 
@@ -105,7 +105,7 @@ class TransitionGroup extends React.Component {
       component.componentDidAppear();
     }
 
-    delete this.currentlyTransitioningKeys[key];
+    delete this.currentlyTransitioningKeys[key];//appearEntry 动画结束后，删除标志
 
     let currentChildMapping = getChildMapping(this.props.children);
 

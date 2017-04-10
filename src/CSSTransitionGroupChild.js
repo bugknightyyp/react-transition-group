@@ -83,7 +83,7 @@ class CSSTransitionGroupChild extends React.Component {
     this.queueClassAndNode(activeClassName, node);
 
     // Clean-up the animation after the specified delay
-    let finish = (e) => {
+    let finish = (e) => {// 动画完成回调
       if (e && e.target !== node) {
         return;
       }
@@ -103,7 +103,7 @@ class CSSTransitionGroupChild extends React.Component {
       }
     };
 
-    if (timeout) {
+    if (timeout) {// 如果有失效期
       timer = setTimeout(finish, timeout);
       this.transitionTimeouts.push(timer);
     } else if (transitionEnd) {
@@ -123,9 +123,9 @@ class CSSTransitionGroupChild extends React.Component {
   }
 
   flushClassNameAndNodeQueue() {
-    if (!this.unmounted) {
+    if (!this.unmounted) {// 如果没有被卸载
       this.classNameAndNodeQueue.forEach((obj) => {
-        // This is for to force a repaint,
+        // This is for to force a repaint, 强制重绘
         // which is necessary in order to transition styles when adding a class name.
         /* eslint-disable no-unused-expressions */
         obj.node.scrollTop;

@@ -36,7 +36,7 @@ export function getChildMapping(children) {
  * @return {object} a key set that contains all keys in `prev` and all keys
  * in `next` in a reasonable order.
  */
-export function mergeChildMappings(prev, next) {
+export function mergeChildMappings(prev, next) {//例如: {a:1, b: 2, c: 3}, {b:5} = {a:1, b: 5, c: 3}
   prev = prev || {};
   next = next || {};
 
@@ -53,13 +53,13 @@ export function mergeChildMappings(prev, next) {
   let nextKeysPending = {};
 
   let pendingKeys = [];
-  for (let prevKey in prev) {
-    if (next.hasOwnProperty(prevKey)) {
-      if (pendingKeys.length) {
+  for (let prevKey in prev) {//遍历上次所有的key
+    if (next.hasOwnProperty(prevKey)) {// 如果出现在下一次
+      if (pendingKeys.length) {// 如果已经有挂起的，
         nextKeysPending[prevKey] = pendingKeys;
         pendingKeys = [];
       }
-    } else {
+    } else {//如果没有出现在下一次中，则挂起
       pendingKeys.push(prevKey);
     }
   }
