@@ -37,7 +37,6 @@ class TransitionGroup extends React.Component {
   }
 
   componentDidMount() {// 初始化工作
-    debugger
     let initialChildMapping = this.state.children;
     for (let key in initialChildMapping) {// 如果 没有添加 key，则 key = .0 之类的 形式
       if (initialChildMapping[key]) {
@@ -75,7 +74,7 @@ class TransitionGroup extends React.Component {
     // If we want to someday check for reordering, we could do it here.
   }
 
-  componentDidUpdate() {
+  componentDidUpdate() {//dom更新后  对新增的element执行进入动画，对删除的element执行离开动画
     let keysToEnter = this.keysToEnter;
     this.keysToEnter = [];
     keysToEnter.forEach(this.performEnter);
@@ -176,7 +175,7 @@ class TransitionGroup extends React.Component {
     } else {
       this.setState((state) => {
         let newChildren = Object.assign({}, state.children);
-        delete newChildren[key];
+        delete newChildren[key];// 离开动画结束后，删除该element
         return { children: newChildren };
       });
     }

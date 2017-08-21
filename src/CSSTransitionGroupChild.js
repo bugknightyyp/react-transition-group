@@ -117,7 +117,7 @@ class CSSTransitionGroupChild extends React.Component {
       node,
     });
 
-    if (!this.rafHandle) {
+    if (!this.rafHandle) {//activeClassName 添加的时间比 添加className的时间晚一个ticker
       this.rafHandle = raf(() => this.flushClassNameAndNodeQueue());
     }
   }
